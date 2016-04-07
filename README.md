@@ -34,16 +34,16 @@ like:<br>
 }<br>
 
 - (UIView *)cards:(iCards *)cards viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view {<br>
-        >>UILabel *label = (UILabel *)view;<br>
-        >>if (label == nil) {<br>
+        UILabel *label = (UILabel *)view;<br>
+        if (label == nil) {<br>
             CGSize cardContainnerSize = self.cardContainner.frame.size;<br>
             label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, cardContainnerSize.width - 30, cardContainnerSize.height - 20)];<br>
             label.textAlignment = NSTextAlignmentCenter;<br>
             label.layer.cornerRadius = 5;<br>
-        >>}
-        >>label.text = [self.cardsArray[index] stringValue];<br>
-        >>label.layer.backgroundColor = [self randomColor].CGColor;<br>
-        >>return label;<br>
+        }
+        label.text = [self.cardsArray[index] stringValue];<br>
+        label.layer.backgroundColor = [self randomColor].CGColor;<br>
+        return label;<br>
 }
 <br>
 5. if you wish to do something after a card removed from screen, you need iCardDelegate.
