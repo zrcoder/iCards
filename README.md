@@ -27,7 +27,7 @@ In your viewController:
 4. There are 2 methods of dataSource protocl must be implemented:
   like:
 ---
-// iCardsDataSource
+// iCardsDataSource<br>
 - (NSInteger)numberOfItemsInCards:(iCards *)cards {
     return self.cardsArray.count;
 }
@@ -44,11 +44,11 @@ In your viewController:
     label.layer.backgroundColor = [self randomColor].CGColor;
     return label;
 }
-\n
+<br>
 5. if you wish to do something after a card removed from screen, you need iCardDelegate.
 ---
-for exaple:\n
-cardContainner.delegate = self;\n
+for exaple:<br>
+cardContainner.delegate = self;<br>
 // iCardsDelegate
 - (void)cards:(iCards *)cards didRemovedItemAtIndex:(NSInteger)index {
     NSLog(@"index of removed card: %ld", index);
