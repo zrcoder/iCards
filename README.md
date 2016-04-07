@@ -15,13 +15,13 @@ A containner of views like cards can be dragged!
 ![iCards](https://github.com/DingHub/iCards/blob/master/ScreenShort/4.png)
 
 
-Usege:
-In your viewController:
-1.#import "iCards.h"
-2.New an iCards with code or ib. (Let's call it cardContainner).
-3. cardContainner.dadaSource = self;
+Usege:\n
+In your viewController:\n
+1.#import "iCards.h"\n
+2.New an iCards with code or ib. (Let's call it cardContainner).\n
+3. cardContainner.dadaSource = self;\n
 4. There are 2 methods of dataSource protocl must be implemented:
-  like:
+  like:\n
 
 // iCardsDataSource
 - (NSInteger)numberOfItemsInCards:(iCards *)cards {
@@ -40,10 +40,10 @@ In your viewController:
     label.layer.backgroundColor = [self randomColor].CGColor;
     return label;
 }
-
-5. if you wish to do something after a card removed from screen, you need iCardDelegate.
-for exaple:
-cardContainner.delegate = self;
+\n
+5. if you wish to do something after a card removed from screen, you need iCardDelegate.\n
+for exaple:\n
+cardContainner.delegate = self;\n
 // iCardsDelegate
 - (void)cards:(iCards *)cards didRemovedItemAtIndex:(NSInteger)index {
     NSLog(@"index of removed card: %ld", index);
