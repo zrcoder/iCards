@@ -6,7 +6,7 @@ A containner of views (like cards) can be dragged!
 
 ![iCards](https://github.com/DingHub/ScreenShots/blob/master/1.png)
 
-Usege:
+Usage:
 ---
 Here is an example:<br>
 
