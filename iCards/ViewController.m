@@ -6,7 +6,9 @@
 //  Copyright © 2016年 Ding. All rights reserved.
 //
 
+
 #import "ViewController.h"
+
 #import "iCards.h"
 
 @interface ViewController () <iCardsDataSource, iCardsDelegate>
@@ -26,14 +28,37 @@
     self.cardContainner.delegate = self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
 - (void)makeCardsData {
     for (int i=0; i<10; i++) {
         [self.cardsArray addObject:@(i)];
     }
+}
+
+
+// iCardsDataSource
+
+- (NSInteger)numberOfItemsInCards:(iCards *)cards {
+    return self.cardsArray.count;
+}
+
+- (UIView *)cards:(iCards *)cards viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view {
+    UILabel *label = (UILabel *)view;
+    if (label == nil) {
+        CGSize cardContainnerSize = self.cardContainner.frame.size;
+        CGRect labelFrame = CGRectMake(0, 0, cardContainnerSize.width - 30, cardContainnerSize.height - 20);
+        label = [[UILabel alloc] initWithFrame:labelFrame];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.layer.cornerRadius = 5;
+    }
+    label.text = [self.cardsArray[index] stringValue];
+    label.layer.backgroundColor = [self randomColor].CGColor;
+    return label;
+}
+
+// iCardsDelegate
+
+- (void)cards:(iCards *)cards didRemovedItemAtIndex:(NSInteger)index {
+    NSLog(@"index of removed card: %ld", index);
 }
 
 - (IBAction)changeOffset:(UISegmentedControl *)sender {
@@ -76,25 +101,6 @@
     return _cardsArray;
 }
 
-// iCardsDataSource
-
-- (NSInteger)numberOfItemsInCards:(iCards *)cards {
-    return self.cardsArray.count;
-}
-
-- (UIView *)cards:(iCards *)cards viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view {
-    UILabel *label = (UILabel *)view;
-    if (label == nil) {
-        CGSize cardContainnerSize = self.cardContainner.frame.size;
-        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, cardContainnerSize.width - 30, cardContainnerSize.height - 20)];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.layer.cornerRadius = 5;
-    }
-    label.text = [self.cardsArray[index] stringValue];
-    label.layer.backgroundColor = [self randomColor].CGColor;
-    return label;
-}
-
 - (UIColor *)randomColor {
     CGFloat red = arc4random() % 255;
     CGFloat green = arc4random() % 255;
@@ -102,10 +108,8 @@
     return [UIColor colorWithRed:red/255 green:green/255 blue:blue/255 alpha:1];
 }
 
-// iCardsDelegate
-
-- (void)cards:(iCards *)cards didRemovedItemAtIndex:(NSInteger)index {
-    NSLog(@"index of removed card: %ld", index);
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
 }
 
 @end

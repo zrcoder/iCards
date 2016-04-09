@@ -131,7 +131,6 @@ static const CGFloat kRotationAngle = M_PI / 8;
     if (count <= 0) {
         return;
     }
-    
     CGFloat width = self.frame.size.width;
     CGFloat height = self.frame.size.height;
     CGFloat horizonOffset = _offset.width;
@@ -139,13 +138,21 @@ static const CGFloat kRotationAngle = M_PI / 8;
     UIView *lastCard = [self.visibleViews lastObject];
     CGFloat cardWidth = lastCard.frame.size.width;
     CGFloat cardHeitht = lastCard.frame.size.height;
-    CGFloat lastCardX = (width - cardWidth + (_numberOfVisibleItems - 1) * fabs(horizonOffset)) / 2;
-    CGFloat lastCardY = (height - cardHeitht + (_numberOfVisibleItems - 1) * fabs(verticalOffset)) / 2;
+    
+    CGFloat firstCardX = (width - cardWidth - (_numberOfVisibleItems - 1) * fabs(horizonOffset)) / 2;
+    if (horizonOffset < 0) {
+        firstCardX += (_numberOfVisibleItems - 1) * fabs(horizonOffset);
+    }
+    CGFloat firstCardY = (height - cardHeitht - (_numberOfVisibleItems - 1) * fabs(verticalOffset)) / 2;
+    if (verticalOffset < 0) {
+        firstCardY += (_numberOfVisibleItems - 1) * fabs(verticalOffset);
+    }
     
     for (NSInteger i=0; i<count; i++) {
-        UIView *card = self.visibleViews[count - i - 1];
+        NSInteger index = count - 1 - i;    //add cards from back to front
+        UIView *card = self.visibleViews[index];
         CGSize size = card.frame.size;
-        card.frame =CGRectMake(lastCardX - i * horizonOffset, lastCardY - i * verticalOffset, size.width, size.height);
+        card.frame =CGRectMake(firstCardX + index * horizonOffset, firstCardY + index * verticalOffset, size.width, size.height);
         [self addSubview:card];
     }
     
