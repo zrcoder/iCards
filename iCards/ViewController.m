@@ -58,7 +58,7 @@
 // iCardsDelegate
 
 - (void)cards:(iCards *)cards didRemovedItemAtIndex:(NSInteger)index {
-    NSLog(@"index of removed card: %ld", index);
+    NSLog(@"index of removed card: %ld", (long)index);
 }
 
 - (IBAction)changeOffset:(UISegmentedControl *)sender {
