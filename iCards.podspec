@@ -4,9 +4,9 @@ Pod::Spec.new do |s|
   s.summary      = 'A containner of views (like cards) can be dragged!'
   s.authors      = { 'Ding' => 'love-nankai@163.com'}
   s.platform     = :ios, '7.0'
-  s.homepage     = "https://github.com/DingHub/iCards"
-  s.license      = "MIT"
-  s.source       = { :git => "https://github.com/DingHub/iCards.git", :tag => s.version }
+  s.homepage     = 'https://github.com/DingHub/iCards'
+  s.license      = 'MIT'
+  s.source       = { :git => 'https://github.com/DingHub/iCards.git', :tag => s.version }
   s.source_files = 'iCards/**/*.{h,m}'
   s.requires_arc = true
 end
