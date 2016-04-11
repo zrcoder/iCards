@@ -8,7 +8,7 @@ A containner of views (like cards) can be dragged!
 
 Usage:
 ---
-pod surppored<br>
+pod surpported<br>
 pod 'iCards', '~> 1.0.0'<br>
 Here is an example:<br>
 
