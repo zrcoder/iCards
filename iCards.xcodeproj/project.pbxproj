@@ -48,13 +48,15 @@
 				840056711CBB4BD900487520 /* iCards.h */,
 				840056721CBB4BD900487520 /* iCards.m */,
 			);
-			path = iCards;
+			name = iCards;
+			path = iCards/iCards;
 			sourceTree = "<group>";
 		};
 		84C500C31CB4D24E00A2156C = {
 			isa = PBXGroup;
 			children = (
-				84C500CE1CB4D24E00A2156C /* iCards */,
+				840056701CBB4BD900487520 /* iCards */,
+				84C500CE1CB4D24E00A2156C /* iCardsExample */,
 				84C500CD1CB4D24E00A2156C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,10 +69,9 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		84C500CE1CB4D24E00A2156C /* iCards */ = {
+		84C500CE1CB4D24E00A2156C /* iCardsExample */ = {
 			isa = PBXGroup;
 			children = (
-				840056701CBB4BD900487520 /* iCards */,
 				84C500D21CB4D24E00A2156C /* AppDelegate.h */,
 				84C500D31CB4D24E00A2156C /* AppDelegate.m */,
 				84C500D51CB4D24E00A2156C /* ViewController.h */,
@@ -81,6 +82,7 @@
 				84C500E01CB4D24E00A2156C /* Info.plist */,
 				84C500CF1CB4D24E00A2156C /* Supporting Files */,
 			);
+			name = iCardsExample;
 			path = iCards;
 			sourceTree = "<group>";
 		};
