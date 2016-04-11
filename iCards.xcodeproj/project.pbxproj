@@ -7,16 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		840056731CBB4BD900487520 /* iCards.m in Sources */ = {isa = PBXBuildFile; fileRef = 840056721CBB4BD900487520 /* iCards.m */; };
 		84C500D11CB4D24E00A2156C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C500D01CB4D24E00A2156C /* main.m */; };
 		84C500D41CB4D24E00A2156C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C500D31CB4D24E00A2156C /* AppDelegate.m */; };
 		84C500D71CB4D24E00A2156C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C500D61CB4D24E00A2156C /* ViewController.m */; };
 		84C500DA1CB4D24E00A2156C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84C500D81CB4D24E00A2156C /* Main.storyboard */; };
 		84C500DC1CB4D24E00A2156C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84C500DB1CB4D24E00A2156C /* Assets.xcassets */; };
 		84C500DF1CB4D24E00A2156C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84C500DD1CB4D24E00A2156C /* LaunchScreen.storyboard */; };
-		84C500E81CB4D27400A2156C /* iCards.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C500E71CB4D27400A2156C /* iCards.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		840056711CBB4BD900487520 /* iCards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCards.h; sourceTree = "<group>"; };
+		840056721CBB4BD900487520 /* iCards.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCards.m; sourceTree = "<group>"; };
 		84C500CC1CB4D24E00A2156C /* iCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C500D01CB4D24E00A2156C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		84C500D21CB4D24E00A2156C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -27,8 +29,6 @@
 		84C500DB1CB4D24E00A2156C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84C500DE1CB4D24E00A2156C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84C500E01CB4D24E00A2156C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84C500E61CB4D27400A2156C /* iCards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCards.h; sourceTree = "<group>"; };
-		84C500E71CB4D27400A2156C /* iCards.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCards.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +42,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		840056701CBB4BD900487520 /* iCards */ = {
+			isa = PBXGroup;
+			children = (
+				840056711CBB4BD900487520 /* iCards.h */,
+				840056721CBB4BD900487520 /* iCards.m */,
+			);
+			path = iCards;
+			sourceTree = "<group>";
+		};
 		84C500C31CB4D24E00A2156C = {
 			isa = PBXGroup;
 			children = (
@@ -61,8 +70,7 @@
 		84C500CE1CB4D24E00A2156C /* iCards */ = {
 			isa = PBXGroup;
 			children = (
-				84C500E61CB4D27400A2156C /* iCards.h */,
-				84C500E71CB4D27400A2156C /* iCards.m */,
+				840056701CBB4BD900487520 /* iCards */,
 				84C500D21CB4D24E00A2156C /* AppDelegate.h */,
 				84C500D31CB4D24E00A2156C /* AppDelegate.m */,
 				84C500D51CB4D24E00A2156C /* ViewController.h */,
@@ -155,7 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84C500D71CB4D24E00A2156C /* ViewController.m in Sources */,
-				84C500E81CB4D27400A2156C /* iCards.m in Sources */,
+				840056731CBB4BD900487520 /* iCards.m in Sources */,
 				84C500D41CB4D24E00A2156C /* AppDelegate.m in Sources */,
 				84C500D11CB4D24E00A2156C /* main.m in Sources */,
 			);
