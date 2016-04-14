@@ -208,7 +208,7 @@ static const CGFloat kRotationAngle = M_PI / 8;
     }
 }
 -(void)rightActionForView:(UIView *)view {
-    CGPoint finishPoint = CGPointMake(500, 2*self.yFromCenter +self.originalPoint.y);
+    CGPoint finishPoint = CGPointMake(500, 2 * self.yFromCenter + self.originalPoint.y);
     [UIView animateWithDuration:0.3
                      animations: ^{
                          view.center = finishPoint;
@@ -222,7 +222,7 @@ static const CGFloat kRotationAngle = M_PI / 8;
 }
 
 -(void)leftActionForView:(UIView *)view {
-    CGPoint finishPoint = CGPointMake(-500, 2*self.yFromCenter +self.originalPoint.y);
+    CGPoint finishPoint = CGPointMake(-500, 2 * self.yFromCenter + self.originalPoint.y);
     [UIView animateWithDuration:0.3
                      animations:^{
                          view.center = finishPoint;
