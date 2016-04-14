@@ -116,6 +116,7 @@ static const CGFloat kRotationAngle = M_PI / 8;
                     UIView *view = [self.dataSource cards:self viewForItemAtIndex:i reusingView:_reusingView];
                     [self.visibleViews addObject:view];
                 }
+                _reusingView = [self.visibleViews firstObject];
             }
         }
     }
@@ -191,6 +192,10 @@ static const CGFloat kRotationAngle = M_PI / 8;
     }
 }
 - (void)afterSwipedView:(UIView *)view {
+    NSInteger cardNumbers = [self.dataSource numberOfItemsInCards:self];
+    if (_currentIndex > cardNumbers - 1) {
+        _currentIndex = 0;
+    }
     if (self.xFromCenter > kActionMargin) {
         [self rightActionForView:view];
     } else if (self.xFromCenter < -kActionMargin) {
@@ -232,37 +237,35 @@ static const CGFloat kRotationAngle = M_PI / 8;
 
 - (void)cardSwipedAction:(UIView *)card {
     
-    _reusingView = card;
     [self.visibleViews removeObjectAtIndex:0];// <=> [self.visibleViews removeObject:card];
+    _reusingView = card;
     card.transform = CGAffineTransformMakeRotation(0);
     [card removeFromSuperview];
-    
-    if ([self.delegate respondsToSelector:@selector(cards:didRemovedItemAtIndex:)]) {
-        [self.delegate cards:self didRemovedItemAtIndex:_currentIndex];
-    }
     
     NSInteger cardNumbers = [self.dataSource numberOfItemsInCards:self];
     UIView *newCard;
     NSInteger newCardIndex = _currentIndex + _numberOfVisibleItems;
     if (newCardIndex < cardNumbers) {
         newCard = [self.dataSource cards:self viewForItemAtIndex:newCardIndex reusingView:_reusingView];
-    } else {
-        if (_currentIndex == cardNumbers - 1) {
-            _currentIndex = -1;
-        }
+    } else {        
         if (_itemsShouldShowedCyclically) {
-            newCardIndex = (_currentIndex + _numberOfVisibleItems) % cardNumbers;
+            newCardIndex %= cardNumbers;
             newCard = [self.dataSource cards:self viewForItemAtIndex:newCardIndex reusingView:_reusingView];
         }
     }
     if (newCard) {
         [self.visibleViews addObject:newCard];
     }
+    
+    if ([self.delegate respondsToSelector:@selector(cards:didRemovedItemAtIndex:)]) {
+        [self.delegate cards:self didRemovedItemAtIndex:_currentIndex];
+    }
     _currentIndex ++;
     [self addAndlayoutCards];
 }
 
-
-
+- (UIView *)currentCard {
+    return [self.visibleViews firstObject];
+}
 
 @end

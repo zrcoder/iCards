@@ -26,6 +26,7 @@
 @property (nonatomic, assign) CGSize offset;
 
 - (void)reloadData;
+- (UIView *)currentCard;
 
 @end
 
