@@ -10,8 +10,6 @@ There are only visible cards in memory, after you drag and removed the top one, 
 
 Usage:
 ---
-pod surpported<br>
-pod 'iCards', '~> 1.0.0'<br>
 Here is an example:<br>
 
 ![iCards](https://github.com/DingHub/ScreenShots/blob/master/2.png)
