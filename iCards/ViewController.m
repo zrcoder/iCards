@@ -29,7 +29,7 @@
 }
 
 - (void)makeCardsData {
-    for (int i=0; i<4; i++) {
+    for (int i=0; i<100; i++) {
         [self.cardsArray addObject:@(i)];
     }
 }
