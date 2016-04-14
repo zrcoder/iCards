@@ -116,7 +116,6 @@ static const CGFloat kRotationAngle = M_PI / 8;
                     UIView *view = [self.dataSource cards:self viewForItemAtIndex:i reusingView:_reusingView];
                     [self.visibleViews addObject:view];
                 }
-                _reusingView = [self.visibleViews firstObject];
             }
         }
     }
