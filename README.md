@@ -3,8 +3,7 @@ A containner of views (like cards) can be dragged!
 ---
 
 There are only visible cards in memory, after you drag and removed the top one, it will be reused as the last one.<br>
-pod surpported<br>
-pod 'iCards', '~> 1.0.1'<br>
+pod surpported: pod 'iCards', '~> 1.0.1'<br>
 
 ![iCards](https://github.com/DingHub/ScreenShots/blob/master/0.png)
 ![iCards](https://github.com/DingHub/ScreenShots/blob/master/1.png)
