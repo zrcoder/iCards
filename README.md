@@ -7,7 +7,6 @@ pod surpported: pod 'iCards', '~> 1.0.1'<br>
 
 ![iCards](https://github.com/DingHub/ScreenShots/blob/master/0.png)
 ![iCards](https://github.com/DingHub/ScreenShots/blob/master/1.png)
-![iCards](https://github.com/DingHub/ScreenShots/blob/master/16.png)
 
 Usage:
 ---
