@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
   s.name         = "iCards"
   s.version      = "1.0.1"
-  s.license      = "MIT"
+  s.license      = "Copyright (c) 2015 Ding"
   s.summary      = "A containner of views (like cards) can be dragged!"
   s.homepage     = "https://github.com/DingHub/iCards"
   s.license      = "MIT"
