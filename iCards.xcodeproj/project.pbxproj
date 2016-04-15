@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		840056731CBB4BD900487520 /* iCards.m in Sources */ = {isa = PBXBuildFile; fileRef = 840056721CBB4BD900487520 /* iCards.m */; };
+		848884531CC099CF0092486A /* iCards.m in Sources */ = {isa = PBXBuildFile; fileRef = 848884521CC099CF0092486A /* iCards.m */; };
 		84C500D11CB4D24E00A2156C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C500D01CB4D24E00A2156C /* main.m */; };
 		84C500D41CB4D24E00A2156C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C500D31CB4D24E00A2156C /* AppDelegate.m */; };
 		84C500D71CB4D24E00A2156C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C500D61CB4D24E00A2156C /* ViewController.m */; };
@@ -17,8 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		840056711CBB4BD900487520 /* iCards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCards.h; sourceTree = "<group>"; };
-		840056721CBB4BD900487520 /* iCards.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCards.m; sourceTree = "<group>"; };
+		848884511CC099CF0092486A /* iCards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCards.h; sourceTree = "<group>"; };
+		848884521CC099CF0092486A /* iCards.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCards.m; sourceTree = "<group>"; };
 		84C500CC1CB4D24E00A2156C /* iCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C500D01CB4D24E00A2156C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		84C500D21CB4D24E00A2156C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -42,20 +42,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		840056701CBB4BD900487520 /* iCards */ = {
+		848884501CC099CF0092486A /* src */ = {
 			isa = PBXGroup;
 			children = (
-				840056711CBB4BD900487520 /* iCards.h */,
-				840056721CBB4BD900487520 /* iCards.m */,
+				848884511CC099CF0092486A /* iCards.h */,
+				848884521CC099CF0092486A /* iCards.m */,
 			);
-			name = iCards;
-			path = iCards/iCards;
+			path = src;
 			sourceTree = "<group>";
 		};
 		84C500C31CB4D24E00A2156C = {
 			isa = PBXGroup;
 			children = (
-				840056701CBB4BD900487520 /* iCards */,
+				848884501CC099CF0092486A /* src */,
 				84C500CE1CB4D24E00A2156C /* iCardsExample */,
 				84C500CD1CB4D24E00A2156C /* Products */,
 			);
@@ -164,8 +163,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				848884531CC099CF0092486A /* iCards.m in Sources */,
 				84C500D71CB4D24E00A2156C /* ViewController.m in Sources */,
-				840056731CBB4BD900487520 /* iCards.m in Sources */,
 				84C500D41CB4D24E00A2156C /* AppDelegate.m in Sources */,
 				84C500D11CB4D24E00A2156C /* main.m in Sources */,
 			);
