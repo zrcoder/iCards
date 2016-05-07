@@ -25,6 +25,9 @@
 // offset for the next card to the current card, (it will decide the cards appearance, the top card is on top-left, top, or bottom-right and so on; default is (5, 5)
 @property (nonatomic, assign) CGSize offset;
 
+// If there is only one card, maybe you don't want to swipe it;
+@property (nonatomic, assign) BOOL swipEnabled;
+
 - (void)reloadData;
 - (UIView *)currentCard;
 
@@ -41,6 +44,7 @@
 @protocol iCardsDelegate <NSObject>
 @optional
 
+- (void)cards:(iCards *)cards beginSwipingItemAtIndex:(NSInteger)index;
 - (void)cards:(iCards *)cards didRemovedItemAtIndex:(NSInteger)index;
 - (void)cards:(iCards *)cards didLeftRemovedItemAtIndex:(NSInteger)index;
 - (void)cards:(iCards *)cards didRightRemovedItemAtIndex:(NSInteger)index;

@@ -86,6 +86,10 @@ static const CGFloat kRotationAngle = M_PI / 8;
     _dataSource = dataSource;
     [self reloadData];
 }
+- (void)setSwipEnabled:(BOOL)swipEnabled {
+    _swipEnabled = swipEnabled;
+    self.panGestureRecognizer.enabled = swipEnabled;
+}
 - (NSMutableArray *)visibleViews {
     if (_visibleViews == nil) {
         _visibleViews = [[NSMutableArray alloc] initWithCapacity:_numberOfVisibleItems];
@@ -159,6 +163,9 @@ static const CGFloat kRotationAngle = M_PI / 8;
 }
 
 - (void)dragAction:(UIPanGestureRecognizer *)gestureRecognizer {
+    if ([self.delegate respondsToSelector:@selector(cards:beginSwipingItemAtIndex:)]) {
+        [self.delegate cards:self beginSwipingItemAtIndex:_currentIndex];
+    }
     if (self.visibleViews.count <= 0) {
         return;
     }
