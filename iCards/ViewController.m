@@ -102,9 +102,9 @@
 }
 
 - (UIColor *)randomColor {
-    CGFloat red = arc4random() % 255;
-    CGFloat green = arc4random() % 255;
-    CGFloat blue = arc4random() % 255;
+    CGFloat red = arc4random_uniform(256);
+    CGFloat green = arc4random_uniform(256);
+    CGFloat blue = arc4random_uniform(256);
     return [UIColor colorWithRed:red/255 green:green/255 blue:blue/255 alpha:1];
 }
 
