@@ -1,7 +1,7 @@
 # iCards
 A containner of views (like cards) can be dragged!<br>
 ---
-卡片容器，卡片层叠放置，左右滑动可移除顶部一张，下边的移动上来。<br>
+卡片容器，视图以卡片形式层叠放置，可滑动。<br>
 ---
 There are only visible cards in memory, after you drag and removed the top one, it will be reused as the last one.<br>
 内存中只会生成可见的卡片，顶部的卡片被划走之后，会作为最后一张卡片循环利用。<br>
