@@ -123,10 +123,10 @@ static const CGFloat kRotationAngle = M_PI / 8;
             }
         }
     }
-    [self addAndlayoutCards];
+    [self layoutCards];
 }
 
-- (void)addAndlayoutCards {
+- (void)layoutCards {
     for (UIView *view in self.subviews) {
         [view removeFromSuperview];
     }
@@ -141,12 +141,12 @@ static const CGFloat kRotationAngle = M_PI / 8;
     CGFloat verticalOffset = _offset.height;
     UIView *lastCard = [self.visibleViews lastObject];
     CGFloat cardWidth = lastCard.frame.size.width;
-    CGFloat cardHeitht = lastCard.frame.size.height;
-    CGFloat firstCardX = (width - cardWidth - (_numberOfVisibleItems - 1) * fabs(horizonOffset)) / 2;
+    CGFloat cardHeight  = lastCard.frame.size.height;
+    CGFloat firstCardX = (width - cardWidth - (_numberOfVisibleItems - 1) * fabs(horizonOffset)) * 0.5;
     if (horizonOffset < 0) {
         firstCardX += (_numberOfVisibleItems - 1) * fabs(horizonOffset);
     }
-    CGFloat firstCardY = (height - cardHeitht - (_numberOfVisibleItems - 1) * fabs(verticalOffset)) / 2;
+    CGFloat firstCardY = (height - cardHeight  - (_numberOfVisibleItems - 1) * fabs(verticalOffset)) * 0.5;
     if (verticalOffset < 0) {
         firstCardY += (_numberOfVisibleItems - 1) * fabs(verticalOffset);
     }
@@ -267,7 +267,7 @@ static const CGFloat kRotationAngle = M_PI / 8;
         [self.delegate cards:self didRemovedItemAtIndex:_currentIndex];
     }
     _currentIndex ++;
-    [self addAndlayoutCards];
+    [self layoutCards];
 }
 
 - (UIView *)topCard {
