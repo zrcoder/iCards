@@ -28,8 +28,9 @@
 // If there is only one card, maybe you don't want to swipe it;
 @property (nonatomic, assign) BOOL swipEnabled;
 
+@property (nonatomic, strong, readonly) UIView *topCard;
+
 - (void)reloadData;
-- (UIView *)currentCard;
 
 @end
 
@@ -44,7 +45,7 @@
 @protocol iCardsDelegate <NSObject>
 @optional
 
-- (void)cards:(iCards *)cards beginSwipingItemAtIndex:(NSInteger)index;
+- (void)cards:(iCards *)cards beforeSwipingItemAtIndex:(NSInteger)index;
 - (void)cards:(iCards *)cards didRemovedItemAtIndex:(NSInteger)index;
 - (void)cards:(iCards *)cards didLeftRemovedItemAtIndex:(NSInteger)index;
 - (void)cards:(iCards *)cards didRightRemovedItemAtIndex:(NSInteger)index;

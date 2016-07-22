@@ -127,7 +127,6 @@ static const CGFloat kRotationAngle = M_PI / 8;
 }
 
 - (void)addAndlayoutCards {
-    
     for (UIView *view in self.subviews) {
         [view removeFromSuperview];
     }
@@ -135,6 +134,7 @@ static const CGFloat kRotationAngle = M_PI / 8;
     if (count <= 0) {
         return;
     }
+    
     CGFloat width = self.frame.size.width;
     CGFloat height = self.frame.size.height;
     CGFloat horizonOffset = _offset.width;
@@ -142,7 +142,6 @@ static const CGFloat kRotationAngle = M_PI / 8;
     UIView *lastCard = [self.visibleViews lastObject];
     CGFloat cardWidth = lastCard.frame.size.width;
     CGFloat cardHeitht = lastCard.frame.size.height;
-    
     CGFloat firstCardX = (width - cardWidth - (_numberOfVisibleItems - 1) * fabs(horizonOffset)) / 2;
     if (horizonOffset < 0) {
         firstCardX += (_numberOfVisibleItems - 1) * fabs(horizonOffset);
@@ -151,20 +150,20 @@ static const CGFloat kRotationAngle = M_PI / 8;
     if (verticalOffset < 0) {
         firstCardY += (_numberOfVisibleItems - 1) * fabs(verticalOffset);
     }
-    
-    for (NSInteger i=0; i<count; i++) {
-        NSInteger index = count - 1 - i;    //add cards from back to front
-        UIView *card = self.visibleViews[index];
-        CGSize size = card.frame.size;
-        card.frame =CGRectMake(firstCardX + index * horizonOffset, firstCardY + index * verticalOffset, size.width, size.height);
-        [self addSubview:card];
-    }
-    
+    [UIView animateWithDuration:0.08 animations:^{
+        for (NSInteger i=0; i<count; i++) {
+            NSInteger index = count - 1 - i;    //add cards from back to front
+            UIView *card = self.visibleViews[index];
+            CGSize size = card.frame.size;
+            card.frame =CGRectMake(firstCardX + index * horizonOffset, firstCardY + index * verticalOffset, size.width, size.height);
+            [self addSubview:card];
+        }
+    }];
 }
 
 - (void)dragAction:(UIPanGestureRecognizer *)gestureRecognizer {
-    if ([self.delegate respondsToSelector:@selector(cards:beginSwipingItemAtIndex:)]) {
-        [self.delegate cards:self beginSwipingItemAtIndex:_currentIndex];
+    if ([self.delegate respondsToSelector:@selector(cards:beforeSwipingItemAtIndex:)]) {
+        [self.delegate cards:self beforeSwipingItemAtIndex:_currentIndex];
     }
     if (self.visibleViews.count <= 0) {
         return;
@@ -260,6 +259,7 @@ static const CGFloat kRotationAngle = M_PI / 8;
         }
     }
     if (newCard) {
+        newCard.frame = [self.visibleViews.lastObject frame];
         [self.visibleViews addObject:newCard];
     }
     
@@ -270,7 +270,7 @@ static const CGFloat kRotationAngle = M_PI / 8;
     [self addAndlayoutCards];
 }
 
-- (UIView *)currentCard {
+- (UIView *)topCard {
     return [self.visibleViews firstObject];
 }
 
