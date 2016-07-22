@@ -19,6 +19,7 @@
 @property (nonatomic, assign) CGFloat xFromCenter;
 @property (nonatomic, assign) CGFloat yFromCenter;
 @property (nonatomic, assign) NSInteger currentIndex;
+@property (nonatomic, assign) BOOL swipeEnded;
 
 @end
 
@@ -41,6 +42,7 @@ static const CGFloat kRotationAngle = M_PI / 8;
     _itemsShouldShowedCyclically = YES;
     _numberOfVisibleItems = 3;
     _offset = CGSizeMake(5, 5);
+    _swipeEnded = YES;
     [self addGestureRecognizer:self.panGestureRecognizer];
 }
 
@@ -162,8 +164,9 @@ static const CGFloat kRotationAngle = M_PI / 8;
 }
 
 - (void)dragAction:(UIPanGestureRecognizer *)gestureRecognizer {
-    if ([self.delegate respondsToSelector:@selector(cards:beforeSwipingItemAtIndex:)]) {
+    if (self.swipeEnded && [self.delegate respondsToSelector:@selector(cards:beforeSwipingItemAtIndex:)]) {
         [self.delegate cards:self beforeSwipingItemAtIndex:_currentIndex];
+        self.swipeEnded = NO;
     }
     if (self.visibleViews.count <= 0) {
         return;
@@ -175,6 +178,7 @@ static const CGFloat kRotationAngle = M_PI / 8;
             
         case UIGestureRecognizerStateBegan: {
             self.originalPoint = view.center;
+            
             break;
         };
         case UIGestureRecognizerStateChanged:{
@@ -219,8 +223,8 @@ static const CGFloat kRotationAngle = M_PI / 8;
                      animations: ^{
                          view.center = finishPoint;
                      } completion: ^(BOOL complete) {
-                         if ([self.delegate respondsToSelector:@selector(cards:didLeftRemovedItemAtIndex:)]) {
-                             [self.delegate cards:self didRemovedItemAtIndex:_currentIndex];
+                         if ([self.delegate respondsToSelector:@selector(cards:didRightRemovedItemAtIndex:)]) {
+                             [self.delegate cards:self didRightRemovedItemAtIndex:_currentIndex];
                          }
                          [self cardSwipedAction:view];
                      }];
@@ -233,15 +237,15 @@ static const CGFloat kRotationAngle = M_PI / 8;
                      animations:^{
                          view.center = finishPoint;
                      } completion:^(BOOL complete) {
-                         if ([self.delegate respondsToSelector:@selector(cards:didRightRemovedItemAtIndex:)]) {
-                             [self.delegate cards:self didRightRemovedItemAtIndex:_currentIndex];
+                         if ([self.delegate respondsToSelector:@selector(cards:didLeftRemovedItemAtIndex:)]) {
+                             [self.delegate cards:self didLeftRemovedItemAtIndex:_currentIndex];
                          }
                          [self cardSwipedAction:view];
                      }];
 }
 
 - (void)cardSwipedAction:(UIView *)card {
-    
+    self.swipeEnded = YES;
     [self.visibleViews removeObjectAtIndex:0];// <=> [self.visibleViews removeObject:card];
     _reusingView = card;
     card.transform = CGAffineTransformMakeRotation(0);

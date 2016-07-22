@@ -61,6 +61,18 @@
     NSLog(@"index of removed card: %ld", (long)index);
 }
 
+- (void)cards:(iCards *)cards beforeSwipingItemAtIndex:(NSInteger)index {
+    NSLog(@"Begin swiping!");
+}
+
+- (void)cards:(iCards *)cards didLeftRemovedItemAtIndex:(NSInteger)index {
+    NSLog(@"Left---%ld", (long)index);
+}
+
+- (void)cards:(iCards *)cards didRightRemovedItemAtIndex:(NSInteger)index {
+    NSLog(@"Right---%ld", (long)index);
+}
+
 - (IBAction)changeOffset:(UISegmentedControl *)sender {
     switch (sender.selectedSegmentIndex) {
         case 0:
