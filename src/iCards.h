@@ -26,7 +26,7 @@
 @property (nonatomic, assign) CGSize offset;
 
 // If there is only one card, maybe you don't want to swipe it;
-@property (nonatomic, assign) BOOL swipEnabled;
+@property (nonatomic, assign) BOOL swipeEnabled;
 
 @property (nonatomic, strong, readonly) UIView *topCard;
 
