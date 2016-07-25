@@ -256,7 +256,7 @@ static const CGFloat kRotationAngle = M_PI / 8;
     self.swipeEnded = YES;
     card.transform = CGAffineTransformMakeRotation(0);
     card.center = self.originalPoint;
-    CGRect lastCardFrame = [self.visibleViews.lastObject frame];
+    CGRect cardFrame = card.frame;
     _reusingView = card;
     [self.visibleViews removeObject:card];
     [card removeFromSuperview];
@@ -277,7 +277,7 @@ static const CGFloat kRotationAngle = M_PI / 8;
         }
     }
     if (newCard) {
-        newCard.frame = lastCardFrame;
+        newCard.frame = cardFrame;
         [self.visibleViews addObject:newCard];
     }
     
