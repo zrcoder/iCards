@@ -38,7 +38,7 @@ static const CGFloat kRotationAngle = M_PI / 8;
 @implementation iCards
 
 - (void)setUp {
-    _itemsShouldShowedCyclically = YES;
+    _showedCyclically = YES;
     _numberOfVisibleItems = 3;
     _offset = CGSizeMake(5, 5);
     _swipeEnded = YES;
@@ -63,8 +63,8 @@ static const CGFloat kRotationAngle = M_PI / 8;
 
 #pragma mark - setters and getters
 
-- (void)setItemsShouldShowedCyclically:(BOOL)itemsShouldShowedCyclically {
-    _itemsShouldShowedCyclically = itemsShouldShowedCyclically;
+- (void)setShowedCyclically:(BOOL)showedCyclically {
+    _showedCyclically = showedCyclically;
     [self reloadData];
 }
 - (void)setOffset:(CGSize)offset {
@@ -262,7 +262,7 @@ static const CGFloat kRotationAngle = M_PI / 8;
     if (newIndex < cardNumbers) {
         newCard = [self.dataSource cards:self viewForItemAtIndex:newIndex reusingView:_reusingView];
     } else {        
-        if (_itemsShouldShowedCyclically) {
+        if (_showedCyclically) {
             if (cardNumbers == 1) {
                 newIndex = 0;
             } else {

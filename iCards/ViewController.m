@@ -39,7 +39,7 @@
 }
 
 - (void)makeCardsData {
-    for (int i=0; i<10; i++) {
+    for (int i=0; i<100; i++) {
         [self.cardsData addObject:@(i)];
     }
 }
@@ -74,7 +74,7 @@
     }
 }
 - (IBAction)changeShowCyclicallyState:(UISwitch *)sender {
-    self.cards.itemsShouldShowedCyclically = sender.isOn;
+    self.cards.showedCyclically = sender.isOn;
 }
 
 #pragma mark - iCardsDataSource methods

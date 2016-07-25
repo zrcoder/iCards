@@ -16,7 +16,7 @@
 @property (nonatomic, weak) id<iCardsDelegate> delegate;
 
 // Default is YES
-@property (nonatomic, assign) BOOL itemsShouldShowedCyclically;
+@property (nonatomic, assign) BOOL showedCyclically;
 
 // We will creat this number of views, so not too many; default is 3
 @property (nonatomic, assign) NSInteger numberOfVisibleItems;
