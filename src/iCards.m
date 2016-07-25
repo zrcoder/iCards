@@ -43,8 +43,6 @@ static const CGFloat kRotationAngle = M_PI / 8;
     _offset = CGSizeMake(5, 5);
     _swipeEnded = YES;
     [self addGestureRecognizer:self.panGestureRecognizer];
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layoutCards) name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
@@ -286,11 +284,6 @@ static const CGFloat kRotationAngle = M_PI / 8;
     }
     _currentIndex ++;
     [self layoutCards];
-}
-
-- (void)dealloc {
-    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 @end
