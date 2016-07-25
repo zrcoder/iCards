@@ -43,6 +43,8 @@ static const CGFloat kRotationAngle = M_PI / 8;
     _offset = CGSizeMake(5, 5);
     _swipeEnded = YES;
     [self addGestureRecognizer:self.panGestureRecognizer];
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(layoutCards) name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
@@ -81,7 +83,6 @@ static const CGFloat kRotationAngle = M_PI / 8;
     } else {
         _numberOfVisibleItems = cardsNumber;
     }
-    
     [self reloadData];
 }
 - (void)setDataSource:(id<iCardsDataSource>)dataSource {
@@ -115,10 +116,10 @@ static const CGFloat kRotationAngle = M_PI / 8;
     _reusingView = nil;
     [self.visibleViews removeAllObjects];
     if ([self.dataSource respondsToSelector:@selector(numberOfItemsInCards:)]) {
-        NSInteger numberOfItems = [self.dataSource numberOfItemsInCards:self];
-        if (numberOfItems > 0) {
-            if (numberOfItems < _numberOfVisibleItems) {
-                _numberOfVisibleItems = numberOfItems;
+        NSInteger totalNumber = [self.dataSource numberOfItemsInCards:self];
+        if (totalNumber > 0) {
+            if (totalNumber < _numberOfVisibleItems) {
+                _numberOfVisibleItems = totalNumber;
             }
             if ([self.dataSource respondsToSelector:@selector(cards:viewForItemAtIndex:reusingView:)]) {
                 for (NSInteger i=0; i<_numberOfVisibleItems; i++) {
@@ -132,13 +133,16 @@ static const CGFloat kRotationAngle = M_PI / 8;
 }
 
 - (void)layoutCards {
-    for (UIView *view in self.subviews) {
-        [view removeFromSuperview];
-    }
     NSInteger count = self.visibleViews.count;
     if (count <= 0) {
         return;
     }
+    
+    for (UIView *view in self.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    [self layoutIfNeeded];
     
     CGFloat width = self.frame.size.width;
     CGFloat height = self.frame.size.height;
@@ -167,83 +171,84 @@ static const CGFloat kRotationAngle = M_PI / 8;
 }
 
 - (void)dragAction:(UIPanGestureRecognizer *)gestureRecognizer {
-    NSInteger cardNumbers = [self.dataSource numberOfItemsInCards:self];
-    if (_currentIndex > cardNumbers - 1) {
-        _currentIndex = 0;
-    }
-    if (self.swipeEnded && [self.delegate respondsToSelector:@selector(cards:beforeSwipingItemAtIndex:)]) {
-        [self.delegate cards:self beforeSwipingItemAtIndex:_currentIndex];
-        self.swipeEnded = NO;
-    }
     if (self.visibleViews.count <= 0) {
         return;
     }
-    UIView *view = [self.visibleViews firstObject];
-    self.xFromCenter = [gestureRecognizer translationInView:view].x; // positive for right swipe, negative for left
-    self.yFromCenter = [gestureRecognizer translationInView:view].y; // positive for up, negative for down
+    NSInteger totalNumber = [self.dataSource numberOfItemsInCards:self];
+    if (_currentIndex > totalNumber - 1) {
+        _currentIndex = 0;
+    }
+    if (self.swipeEnded) {
+        self.swipeEnded = NO;
+        if ([self.delegate respondsToSelector:@selector(cards:beforeSwipingItemAtIndex:)]) {
+            [self.delegate cards:self beforeSwipingItemAtIndex:_currentIndex];
+        }
+    }
+    UIView *firstCard = [self.visibleViews firstObject];
+    self.xFromCenter = [gestureRecognizer translationInView:firstCard].x; // positive for right swipe, negative for left
+    self.yFromCenter = [gestureRecognizer translationInView:firstCard].y; // positive for up, negative for down
     switch (gestureRecognizer.state) {
             
         case UIGestureRecognizerStateBegan: {
-            self.originalPoint = view.center;
+            self.originalPoint = firstCard.center;
             break;
         };
         case UIGestureRecognizerStateChanged:{
             CGFloat rotationStrength = MIN(self.xFromCenter / kRotationStrength, kRotationMax);
             CGFloat rotationAngel = (CGFloat) (kRotationAngle * rotationStrength);
             CGFloat scale = MAX(1 - fabs(rotationStrength) / kScaleStrength, kScaleMax);
-            view.center = CGPointMake(self.originalPoint.x + self.xFromCenter, self.originalPoint.y + self.yFromCenter);
+            firstCard.center = CGPointMake(self.originalPoint.x + self.xFromCenter, self.originalPoint.y + self.yFromCenter);
             CGAffineTransform transform = CGAffineTransformMakeRotation(rotationAngel);
             CGAffineTransform scaleTransform = CGAffineTransformScale(transform, scale, scale);
-            view.transform = scaleTransform;
+            firstCard.transform = scaleTransform;
             break;
         };
         case UIGestureRecognizerStateEnded: {
-            [self afterSwipedView:view];
+            [self afterSwipedCard:firstCard];
             break;
         };
-        case UIGestureRecognizerStatePossible:break;
-        case UIGestureRecognizerStateCancelled:break;
-        case UIGestureRecognizerStateFailed:break;
+        default:
+            break;
     }
 }
-- (void)afterSwipedView:(UIView *)view {
+- (void)afterSwipedCard:(UIView *)card {
     if (self.xFromCenter > kActionMargin) {
-        [self rightActionForView:view];
+        [self rightActionForCard:card];
     } else if (self.xFromCenter < -kActionMargin) {
-        [self leftActionForView:view];
+        [self leftActionForCard:card];
     } else {
         self.swipeEnded = YES;
         [UIView animateWithDuration:0.3
                          animations: ^{
-                             view.center = self.originalPoint;
-                             view.transform = CGAffineTransformMakeRotation(0);
+                             card.center = self.originalPoint;
+                             card.transform = CGAffineTransformMakeRotation(0);
                          }];
     }
 }
--(void)rightActionForView:(UIView *)view {
+-(void)rightActionForCard:(UIView *)card {
     CGPoint finishPoint = CGPointMake(500, 2 * self.yFromCenter + self.originalPoint.y);
     [UIView animateWithDuration:0.3
                      animations: ^{
-                         view.center = finishPoint;
+                         card.center = finishPoint;
                      } completion: ^(BOOL complete) {
                          if ([self.delegate respondsToSelector:@selector(cards:didRightRemovedItemAtIndex:)]) {
                              [self.delegate cards:self didRightRemovedItemAtIndex:_currentIndex];
                          }
-                         [self cardSwipedAction:view];
+                         [self cardSwipedAction:card];
                      }];
     
 }
 
--(void)leftActionForView:(UIView *)view {
+-(void)leftActionForCard:(UIView *)card {
     CGPoint finishPoint = CGPointMake(-500, 2 * self.yFromCenter + self.originalPoint.y);
     [UIView animateWithDuration:0.3
                      animations:^{
-                         view.center = finishPoint;
+                         card.center = finishPoint;
                      } completion:^(BOOL complete) {
                          if ([self.delegate respondsToSelector:@selector(cards:didLeftRemovedItemAtIndex:)]) {
                              [self.delegate cards:self didLeftRemovedItemAtIndex:_currentIndex];
                          }
-                         [self cardSwipedAction:view];
+                         [self cardSwipedAction:card];
                      }];
 }
 
@@ -256,17 +261,17 @@ static const CGFloat kRotationAngle = M_PI / 8;
     [self.visibleViews removeObject:card];
     [card removeFromSuperview];
     
-    NSInteger cardNumbers = [self.dataSource numberOfItemsInCards:self];
+    NSInteger totalNumber = [self.dataSource numberOfItemsInCards:self];
     UIView *newCard;
     NSInteger newIndex = _currentIndex + _numberOfVisibleItems;
-    if (newIndex < cardNumbers) {
+    if (newIndex < totalNumber) {
         newCard = [self.dataSource cards:self viewForItemAtIndex:newIndex reusingView:_reusingView];
     } else {        
         if (_showedCyclically) {
-            if (cardNumbers == 1) {
+            if (totalNumber == 1) {
                 newIndex = 0;
             } else {
-                newIndex %= cardNumbers;
+                newIndex %= totalNumber;
             }            
             newCard = [self.dataSource cards:self viewForItemAtIndex:newIndex reusingView:_reusingView];
         }
@@ -281,6 +286,11 @@ static const CGFloat kRotationAngle = M_PI / 8;
     }
     _currentIndex ++;
     [self layoutCards];
+}
+
+- (void)dealloc {
+    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 @end

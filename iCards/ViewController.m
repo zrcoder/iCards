@@ -30,7 +30,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self makeCardsData];
-    
     self.cards.dataSource = self;
     self.cards.delegate = self;
 }
@@ -86,8 +85,8 @@
 - (UIView *)cards:(iCards *)cards viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view {
     UILabel *label = (UILabel *)view;
     if (label == nil) {
-        CGSize cardContainnerSize = self.cards.frame.size;
-        CGRect labelFrame = CGRectMake(0, 0, cardContainnerSize.width - 30, cardContainnerSize.height - 20);
+        CGSize size = cards.frame.size;
+        CGRect labelFrame = CGRectMake(0, 0, size.width - 30, size.height - 20);
         label = [[UILabel alloc] initWithFrame:labelFrame];
         label.textAlignment = NSTextAlignmentCenter;
         label.layer.cornerRadius = 5;
