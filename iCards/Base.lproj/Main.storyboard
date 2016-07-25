@@ -120,7 +120,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="cardContainner" destination="1Fh-Qm-UWH" id="8fh-NM-Sfl"/>
+                        <outlet property="cards" destination="1Fh-Qm-UWH" id="okE-qc-XpU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

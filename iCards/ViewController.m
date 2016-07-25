@@ -8,120 +8,111 @@
 
 
 #import "ViewController.h"
-
+#import "Color.h"
 #import "iCards.h"
 
 @interface ViewController () <iCardsDataSource, iCardsDelegate>
 
-@property (weak, nonatomic) IBOutlet iCards *cardContainner;
-@property (nonatomic, strong) NSMutableArray *cardsArray;
+@property (weak, nonatomic) IBOutlet iCards *cards;
+@property (nonatomic, strong) NSMutableArray *cardsData;
 
 @end
 
 @implementation ViewController
 
+- (NSMutableArray *)cardsData {
+    if (_cardsData == nil) {
+        _cardsData = [NSMutableArray array];
+    }
+    return _cardsData;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self makeCardsData];
     
-    self.cardContainner.dataSource = self;
-    self.cardContainner.delegate = self;
+    self.cards.dataSource = self;
+    self.cards.delegate = self;
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
 }
 
 - (void)makeCardsData {
-    for (int i=0; i<100; i++) {
-        [self.cardsArray addObject:@(i)];
+    for (int i=0; i<10; i++) {
+        [self.cardsData addObject:@(i)];
     }
-}
-
-
-// iCardsDataSource
-
-- (NSInteger)numberOfItemsInCards:(iCards *)cards {
-    return self.cardsArray.count;
-}
-
-- (UIView *)cards:(iCards *)cards viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view {
-    UILabel *label = (UILabel *)view;
-    if (label == nil) {
-        CGSize cardContainnerSize = self.cardContainner.frame.size;
-        CGRect labelFrame = CGRectMake(0, 0, cardContainnerSize.width - 30, cardContainnerSize.height - 20);
-        label = [[UILabel alloc] initWithFrame:labelFrame];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.layer.cornerRadius = 5;
-    }
-    label.text = [self.cardsArray[index] stringValue];
-    label.layer.backgroundColor = [self randomColor].CGColor;
-    return label;
-}
-
-// iCardsDelegate
-
-- (void)cards:(iCards *)cards didRemovedItemAtIndex:(NSInteger)index {
-    NSLog(@"index of removed card: %ld", (long)index);
-}
-
-- (void)cards:(iCards *)cards beforeSwipingItemAtIndex:(NSInteger)index {
-    NSLog(@"Begin swiping!");
-}
-
-- (void)cards:(iCards *)cards didLeftRemovedItemAtIndex:(NSInteger)index {
-    NSLog(@"Left---%ld", (long)index);
-}
-
-- (void)cards:(iCards *)cards didRightRemovedItemAtIndex:(NSInteger)index {
-    NSLog(@"Right---%ld", (long)index);
 }
 
 - (IBAction)changeOffset:(UISegmentedControl *)sender {
     switch (sender.selectedSegmentIndex) {
         case 0:
-            self.cardContainner.offset = CGSizeMake(5, 5);
+            self.cards.offset = CGSizeMake(5, 5);
             break;
         case 1:
-            self.cardContainner.offset = CGSizeMake(0, 5);
+            self.cards.offset = CGSizeMake(0, 5);
             break;
         case 2:
-            self.cardContainner.offset = CGSizeMake(-5, 5);
+            self.cards.offset = CGSizeMake(-5, 5);
             break;
         default:
-            self.cardContainner.offset = CGSizeMake(-5, -5);
+            self.cards.offset = CGSizeMake(-5, -5);
             break;
     }
 }
 - (IBAction)changeVisibleNumbers:(UISegmentedControl *)sender {
     switch (sender.selectedSegmentIndex) {
         case 0:
-            self.cardContainner.numberOfVisibleItems = 3;
+            self.cards.numberOfVisibleItems = 3;
             break;
         case 1:
-            self.cardContainner.numberOfVisibleItems = 2;
+            self.cards.numberOfVisibleItems = 2;
             break;
         default:
-            self.cardContainner.numberOfVisibleItems = 5;
+            self.cards.numberOfVisibleItems = 5;
             break;
     }
 }
 - (IBAction)changeShowCyclicallyState:(UISwitch *)sender {
-    self.cardContainner.itemsShouldShowedCyclically = sender.isOn;
+    self.cards.itemsShouldShowedCyclically = sender.isOn;
 }
 
-- (NSMutableArray *)cardsArray {
-    if (_cardsArray == nil) {
-        _cardsArray = [NSMutableArray array];
+#pragma mark - iCardsDataSource methods
+
+- (NSInteger)numberOfItemsInCards:(iCards *)cards {
+    return self.cardsData.count;
+}
+
+- (UIView *)cards:(iCards *)cards viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view {
+    UILabel *label = (UILabel *)view;
+    if (label == nil) {
+        CGSize cardContainnerSize = self.cards.frame.size;
+        CGRect labelFrame = CGRectMake(0, 0, cardContainnerSize.width - 30, cardContainnerSize.height - 20);
+        label = [[UILabel alloc] initWithFrame:labelFrame];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.layer.cornerRadius = 5;
     }
-    return _cardsArray;
+    label.text = [self.cardsData[index] stringValue];
+    label.layer.backgroundColor = [Color randomColor].CGColor;
+    return label;
 }
 
-- (UIColor *)randomColor {
-    CGFloat red = arc4random_uniform(256);
-    CGFloat green = arc4random_uniform(256);
-    CGFloat blue = arc4random_uniform(256);
-    return [UIColor colorWithRed:red/255 green:green/255 blue:blue/255 alpha:1];
+#pragma mark - iCardsDelegate methods
+
+- (void)cards:(iCards *)cards beforeSwipingItemAtIndex:(NSInteger)index {
+    NSLog(@"Begin swiping card %ld!", index);
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+- (void)cards:(iCards *)cards didLeftRemovedItemAtIndex:(NSInteger)index {
+    NSLog(@"<--%ld", index);
+}
+
+- (void)cards:(iCards *)cards didRightRemovedItemAtIndex:(NSInteger)index {
+    NSLog(@"%ld-->", index);
+}
+
+- (void)cards:(iCards *)cards didRemovedItemAtIndex:(NSInteger)index {
+    NSLog(@"index of removed card: %ld", index);
 }
 
 @end

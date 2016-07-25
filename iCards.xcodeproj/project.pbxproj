@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		843746DB1D45B12B0014D5C6 /* Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 843746DA1D45B12B0014D5C6 /* Color.m */; };
 		848884531CC099CF0092486A /* iCards.m in Sources */ = {isa = PBXBuildFile; fileRef = 848884521CC099CF0092486A /* iCards.m */; };
 		84C500D11CB4D24E00A2156C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C500D01CB4D24E00A2156C /* main.m */; };
 		84C500D41CB4D24E00A2156C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C500D31CB4D24E00A2156C /* AppDelegate.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		843746D91D45B12B0014D5C6 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
+		843746DA1D45B12B0014D5C6 /* Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Color.m; sourceTree = "<group>"; };
 		848884511CC099CF0092486A /* iCards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCards.h; sourceTree = "<group>"; };
 		848884521CC099CF0092486A /* iCards.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCards.m; sourceTree = "<group>"; };
 		84C500CC1CB4D24E00A2156C /* iCards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCards.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +45,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		843746D81D45B1200014D5C6 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				843746D91D45B12B0014D5C6 /* Color.h */,
+				843746DA1D45B12B0014D5C6 /* Color.m */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		848884501CC099CF0092486A /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -54,6 +66,7 @@
 		84C500C31CB4D24E00A2156C = {
 			isa = PBXGroup;
 			children = (
+				843746D81D45B1200014D5C6 /* Utilities */,
 				848884501CC099CF0092486A /* src */,
 				84C500CE1CB4D24E00A2156C /* iCardsExample */,
 				84C500CD1CB4D24E00A2156C /* Products */,
@@ -165,6 +178,7 @@
 			files = (
 				848884531CC099CF0092486A /* iCards.m in Sources */,
 				84C500D71CB4D24E00A2156C /* ViewController.m in Sources */,
+				843746DB1D45B12B0014D5C6 /* Color.m in Sources */,
 				84C500D41CB4D24E00A2156C /* AppDelegate.m in Sources */,
 				84C500D11CB4D24E00A2156C /* main.m in Sources */,
 			);

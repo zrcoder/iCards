@@ -8,21 +8,6 @@
 
 #import "iCards.h"
 
-@interface iCards ()
-
-@property (strong, nonatomic) NSMutableArray *visibleViews;
-
-@property (strong, nonatomic) UIView *reusingView;
-
-@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
-@property (nonatomic, assign) CGPoint originalPoint;
-@property (nonatomic, assign) CGFloat xFromCenter;
-@property (nonatomic, assign) CGFloat yFromCenter;
-@property (nonatomic, assign) NSInteger currentIndex;
-@property (nonatomic, assign) BOOL swipeEnded;
-
-@end
-
 // distance from center where the action applies. Higher = swipe further in order for the action to be called
 static const CGFloat kActionMargin = 120;
 // how quickly the card shrinks. Higher = slower shrinking
@@ -35,6 +20,20 @@ static const CGFloat kRotationMax = 1.0;
 static const CGFloat kRotationStrength = 320;
 // Higher = stronger rotation angle
 static const CGFloat kRotationAngle = M_PI / 8;
+
+@interface iCards ()
+
+@property (strong, nonatomic) NSMutableArray<UIView *> *visibleViews;
+@property (strong, nonatomic) UIView *reusingView;
+
+@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
+@property (nonatomic, assign) CGPoint originalPoint;
+@property (nonatomic, assign) CGFloat xFromCenter;
+@property (nonatomic, assign) CGFloat yFromCenter;
+@property (nonatomic, assign) NSInteger currentIndex;
+@property (nonatomic, assign) BOOL swipeEnded;
+
+@end
 
 @implementation iCards
 
@@ -62,7 +61,8 @@ static const CGFloat kRotationAngle = M_PI / 8;
     return self;
 }
 
-// setters and getters
+#pragma mark - setters and getters
+
 - (void)setItemsShouldShowedCyclically:(BOOL)itemsShouldShowedCyclically {
     _itemsShouldShowedCyclically = itemsShouldShowedCyclically;
     [self reloadData];
@@ -98,15 +98,18 @@ static const CGFloat kRotationAngle = M_PI / 8;
     }
     return _visibleViews;
 }
-
 - (UIPanGestureRecognizer *)panGestureRecognizer {
     if (_panGestureRecognizer == nil) {
         _panGestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dragAction:)];
     }
     return _panGestureRecognizer;
 }
+- (UIView *)topCard {
+   return [self.visibleViews firstObject];
+}
 
-// main methods
+#pragma mark - main methods
+
 - (void)reloadData {
     _currentIndex = 0;
     _reusingView = nil;
@@ -164,6 +167,10 @@ static const CGFloat kRotationAngle = M_PI / 8;
 }
 
 - (void)dragAction:(UIPanGestureRecognizer *)gestureRecognizer {
+    NSInteger cardNumbers = [self.dataSource numberOfItemsInCards:self];
+    if (_currentIndex > cardNumbers - 1) {
+        _currentIndex = 0;
+    }
     if (self.swipeEnded && [self.delegate respondsToSelector:@selector(cards:beforeSwipingItemAtIndex:)]) {
         [self.delegate cards:self beforeSwipingItemAtIndex:_currentIndex];
         self.swipeEnded = NO;
@@ -178,7 +185,6 @@ static const CGFloat kRotationAngle = M_PI / 8;
             
         case UIGestureRecognizerStateBegan: {
             self.originalPoint = view.center;
-            
             break;
         };
         case UIGestureRecognizerStateChanged:{
@@ -201,15 +207,12 @@ static const CGFloat kRotationAngle = M_PI / 8;
     }
 }
 - (void)afterSwipedView:(UIView *)view {
-    NSInteger cardNumbers = [self.dataSource numberOfItemsInCards:self];
-    if (_currentIndex > cardNumbers - 1) {
-        _currentIndex = 0;
-    }
     if (self.xFromCenter > kActionMargin) {
         [self rightActionForView:view];
     } else if (self.xFromCenter < -kActionMargin) {
         [self leftActionForView:view];
     } else {
+        self.swipeEnded = YES;
         [UIView animateWithDuration:0.3
                          animations: ^{
                              view.center = self.originalPoint;
@@ -246,24 +249,30 @@ static const CGFloat kRotationAngle = M_PI / 8;
 
 - (void)cardSwipedAction:(UIView *)card {
     self.swipeEnded = YES;
-    [self.visibleViews removeObjectAtIndex:0];// <=> [self.visibleViews removeObject:card];
-    _reusingView = card;
     card.transform = CGAffineTransformMakeRotation(0);
+    card.center = self.originalPoint;
+    CGRect lastCardFrame = [self.visibleViews.lastObject frame];
+    _reusingView = card;
+    [self.visibleViews removeObject:card];
     [card removeFromSuperview];
     
     NSInteger cardNumbers = [self.dataSource numberOfItemsInCards:self];
     UIView *newCard;
-    NSInteger newCardIndex = _currentIndex + _numberOfVisibleItems;
-    if (newCardIndex < cardNumbers) {
-        newCard = [self.dataSource cards:self viewForItemAtIndex:newCardIndex reusingView:_reusingView];
+    NSInteger newIndex = _currentIndex + _numberOfVisibleItems;
+    if (newIndex < cardNumbers) {
+        newCard = [self.dataSource cards:self viewForItemAtIndex:newIndex reusingView:_reusingView];
     } else {        
         if (_itemsShouldShowedCyclically) {
-            newCardIndex %= cardNumbers;
-            newCard = [self.dataSource cards:self viewForItemAtIndex:newCardIndex reusingView:_reusingView];
+            if (cardNumbers == 1) {
+                newIndex = 0;
+            } else {
+                newIndex %= cardNumbers;
+            }            
+            newCard = [self.dataSource cards:self viewForItemAtIndex:newIndex reusingView:_reusingView];
         }
     }
     if (newCard) {
-        newCard.frame = [self.visibleViews.lastObject frame];
+        newCard.frame = lastCardFrame;
         [self.visibleViews addObject:newCard];
     }
     
@@ -272,10 +281,6 @@ static const CGFloat kRotationAngle = M_PI / 8;
     }
     _currentIndex ++;
     [self layoutCards];
-}
-
-- (UIView *)topCard {
-    return [self.visibleViews firstObject];
 }
 
 @end
