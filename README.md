@@ -1,5 +1,5 @@
 # iCards
-A containner of views (like cards) can be dragged!<br>
+A container of views (like cards) can be dragged!<br>
 ---
 视图容器，视图以卡片形式层叠放置，可滑动。<br>
 ---
