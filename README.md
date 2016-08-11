@@ -26,4 +26,69 @@ Usage:<br>
 Here is an example:<br>
 用法示例：<br>
 
-![iCards](https://github.com/DingHub/ScreenShots/blob/master/iCards/2.png)
+```
+#import "iCards.h"
+```
+```
+@property (weak, nonatomic) IBOutlet iCards *cards;
+@property (nonatomic, strong) NSMutableArray *cardsData;
+```
+```
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self makeCardsData];
+    self.cards.dataSource = self;
+    self.cards.delegate = self;
+}
+- (void)makeCardsData {
+    for (int i=0; i<100; i++) {
+        [self.cardsData addObject:@(i)];
+    }
+}
+- (NSMutableArray *)cardsData {
+    if (_cardsData == nil) {
+        _cardsData = [NSMutableArray array];
+    }
+    return _cardsData;
+}
+
+#pragma mark - iCardsDataSource methods
+
+- (NSInteger)numberOfItemsInCards:(iCards *)cards {
+    return self.cardsData.count;
+}
+
+- (UIView *)cards:(iCards *)cards viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view {
+    UILabel *label = (UILabel *)view;
+    if (label == nil) {
+        CGSize size = cards.frame.size;
+        CGRect labelFrame = CGRectMake(0, 0, size.width - 30, size.height - 20);
+        label = [[UILabel alloc] initWithFrame:labelFrame];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.layer.cornerRadius = 5;
+    }
+    label.text = [self.cardsData[index] stringValue];
+    label.layer.backgroundColor = [Color randomColor].CGColor;
+    return label;
+}
+
+#pragma mark - iCardsDelegate methods
+
+- (void)cards:(iCards *)cards beforeSwipingItemAtIndex:(NSInteger)index {
+    NSLog(@"Begin swiping card %ld!", index);
+}
+
+- (void)cards:(iCards *)cards didLeftRemovedItemAtIndex:(NSInteger)index {
+    NSLog(@"<--%ld", index);
+}
+
+- (void)cards:(iCards *)cards didRightRemovedItemAtIndex:(NSInteger)index {
+    NSLog(@"%ld-->", index);
+}
+
+- (void)cards:(iCards *)cards didRemovedItemAtIndex:(NSInteger)index {
+    NSLog(@"index of removed card: %ld", index);
+}
+
+
+```
