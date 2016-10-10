@@ -6,7 +6,7 @@ A container of views (like cards) can be dragged!<br>
 There are only visible cards in memory, after you drag and removed the top one, it will be reused as the last one.<br>
 内存中只会生成可见的卡片，顶部的卡片被划走之后，会作为最后一张卡片循环利用。<br>
 
-You can find an Swift version here:<br>
+You can find a Swift version here:<br>
 你可以在这里找到Swift版：[SwipeableCards](https://github.com/DingHub/SwipeableCards)<br>
 
 pod surpported: <br>
