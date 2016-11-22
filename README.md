@@ -9,6 +9,8 @@ There are only visible cards in memory, after you drag and removed the top one, 
 You can find a Swift version here:<br>
 你可以在这里找到Swift版：[SwipeableCards](https://github.com/DingHub/SwipeableCards)<br>
 
+这里有一篇：[《探索之旅：代理原理》](http://www.swifthumb.com/thread-14968-1-1.html)，可作为iCards的详细说明文档。
+
 pod surpported: <br>
 支持pod :<br>
 ```
