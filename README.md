@@ -35,7 +35,7 @@ Here is an example:<br>
 @property (weak, nonatomic) IBOutlet iCards *cards;
 @property (nonatomic, strong) NSMutableArray *cardsData;
 ```
-```
+```objective-c
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self makeCardsData];
